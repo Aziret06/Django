@@ -1,12 +1,16 @@
-{%extends 'main_page.html'%}
+{% extends 'main_page.html' %}
 
-{%block content%}
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
+{% block content %}
+<div class="card" style="width: 18rem; margin: 15px">
+  {% if post.image %}
+    <img src="{{post.image.url}}" style="width: 286px; height: 210px">
+  {% else %}
+    <img src="/static/placeholder.jpg">
+  {% endif %}
   <div class="card-body">
     <h5 class="card-title">{{post.title}}</h5>
     <p class="card-text">{{post.content}}</p>
-    <p class="card-text">{{post.rate}}</p>
+    <p class="card-text">Рейтинг: {{post.rate}}/20</p>
   </div>
 </div>
-{%endblock%}
+{% endblock %}

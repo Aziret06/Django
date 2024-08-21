@@ -1,13 +1,16 @@
-{%extends 'main_page.html'%}
-{%block content%}
-{%for post in posts%}
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
+{% extends 'main_page.html' %}
+{% block content %}
+{% for post in posts %}
+<div class="card" style="width: 18rem; margin: 15px">
+  {% if post.image %}
+    <img src="{{post.image.url}}" style="width: 286px; height: 210px">
+  {% else %}
+    <img src="/static/placeholder.jpg">
+  {% endif %}
+  <div class="card-body" style="">
     <h5 class="card-title">{{post.title}}</h5>
-    <p class="card-text">{{post.content}}</p>
     <a href="/posts/{{post.id}}" class="btn btn-primary">Detailed view</a>
   </div>
 </div>
 {%endfor%}
-{%endblock%}
+{% endblock %}
