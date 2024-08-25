@@ -2,22 +2,6 @@
 {%block content%}
 <form method="post" style="padding: 15px;" enctype="multipart/form-data">
     {%csrf_token%}
-    <label>Image</label>
-        <p>
-            <input type="file" name="image">
-        </p>
-    <label>Title</label>
-        <p>
-            <input type="text" name="title">
-        </p>
-    <label>Content</label>
-        <p>
-            <input type="text" name="content">
-        </p>
-    <label>Rate</label>
-        <p>
-            <input type="number" name="rate">
-        </p>
-    <button type="submit">Create post</button>
+    {{form.as_p}}
 </form>
 {%endblock%}
