@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db.models import Q
 
-from posts.forms import PostForm, SearchForm
+from posts.forms import PostForm, SearchForm, PostUpdateForm
 from posts.models import Post
 
 
@@ -61,17 +61,22 @@ def post_create_view(request):
         return render(request, 'post/post_create.html', context={'form': form})
 
     elif request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if not form.is_valid():
+            return render(request, 'post/post_create.html', context={'form': form})
+        form.save()
+        return redirect('/posts/')
 
-        # image = request.FILES.get('image')
-        # title = request.POST.get('title')
-        # content = request.POST.get('content')
-        # rate = request.POST.get('rate')
-        #
-        # Post.objects.create(
-        #     image=image,
-        #     title=title,
-        #     content=content,
-        #     rate=rate
-        # )
 
+@login_required(login_url='login')
+def post_update_view(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if request.method == 'GET':
+        form = PostUpdateForm(instance=post)
+        return render(request, 'post/post_update.html', context={'form': form})
+    if request.method == 'POST':
+        form = PostUpdateForm(request.POST, request.FILES, instance=post)
+        if not form.is_valid():
+            return render(request, 'post/post_update.html', context={'form': form})
+        form.save()
         return redirect('/posts/')

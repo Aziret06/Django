@@ -1,0 +1,27 @@
+{%extends 'main_page.html'%}
+{%load static%}
+{%block content%}
+<div style="padding: 10px">
+<h1>PROFILE</h1>
+    <img src="/media/{{ user.profile.image }}" alt="Profile picture" style=" height: 200px; width: 300px">
+    <h2>Username: <b>{{user.username}}</b></h2>
+    <h3>First name: <b>{{user.first_name}}</b></h3>
+    <h3>Last name: <b>{{user.last_name}}</b></h3>
+    <h3>E-mail: <b>{{user.email}}</b></h3>
+    <h3>My posts:</h3>
+    {% for post in posts %}
+        <div class="card" style="width: 18rem; margin: 15px">
+        {% if post.image %}
+            <img src="{{post.image.url}}" style="width: 286px; height: 210px">
+        {% else %}
+            <img src="{%static 'placeholder.jpg'%}">
+        {% endif %}
+            <div class="card-body" style="">
+                <h5 class="card-title">{{post.title}}</h5>
+                <a href="/posts/{{post.id}}" class="btn btn-primary">Detailed view</a>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+{%endblock%}

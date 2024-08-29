@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from user.forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 
+from user.models import Profile
+from posts.models import Post
+
 
 def register_view(request):
     if request.method == 'GET':
@@ -11,13 +14,15 @@ def register_view(request):
         return render(request, 'user/register.html', context={'form': form})
 
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        form = RegisterForm(request.POST, request.FILES)
         if not form.is_valid():
             return render(request, 'user/register.html', context={'form': form})
         form.cleaned_data.__delitem__('confirm_password')
-        User.objects.create_user(
+        image = form.cleaned_data.pop('image')
+        user = User.objects.create_user(
             **form.cleaned_data
         )
+        Profile.objects.create(user=user, image=image)
         return redirect('/')
 
 
@@ -41,3 +46,9 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('/')
+
+
+@login_required(login_url='login')
+def profile_view(request):
+    posts = Post.objects.filter(author=request.user)
+    return render(request, 'user/profile.html', context={'posts': posts})

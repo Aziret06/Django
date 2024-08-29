@@ -1,0 +1,8 @@
+{%extends "main_page.html"%}
+{%block content%}
+<form method="post" style="padding: 15px;" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button style="padding: 15px" type="submit">Update</button>
+</form>
+{%endblock%}

@@ -11,6 +11,9 @@
     <h5 class="card-title">{{post.title}}</h5>
     <p class="card-text">{{post.content}}</p>
     <p class="card-text">Рейтинг: {{post.rate}}/20</p>
+    {%if post.author == request.user%}
+    <a href="/post/{{post.id}}/update/" class="btn btn-primary">Update</a>
+    {%endif%}
   </div>
 </div>
 {% endblock %}

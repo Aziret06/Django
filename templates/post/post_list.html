@@ -1,4 +1,5 @@
 {% extends 'main_page.html' %}
+{%load static%}
 {% block content %}
 <form action="/posts/" method="get" style="padding: 10px">
   {{search_form.as_p}}
@@ -9,7 +10,7 @@
   {% if post.image %}
     <img src="{{post.image.url}}" style="width: 286px; height: 210px">
   {% else %}
-    <img src="/static/placeholder.jpg">
+    <img src="{%static 'placeholder.jpg'%}">
   {% endif %}
   <div class="card-body" style="">
     <h5 class="card-title">{{post.title}}</h5>

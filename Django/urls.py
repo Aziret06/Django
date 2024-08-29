@@ -23,12 +23,13 @@ from posts.views import (
     main_page_view,
     post_list_view,
     post_detail_view,
-    post_create_view,
+    post_create_view, post_update_view,
 )
 from user.views import (
     register_view,
     login_view,
     logout_view,
+    profile_view,
 )
 
 urlpatterns = [
@@ -41,4 +42,6 @@ urlpatterns = [
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('profile/', profile_view, name='profile'),
+    path('post/<int:post_id>/update/', post_update_view, name='post_update'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
